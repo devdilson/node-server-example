@@ -1,13 +1,10 @@
 import { Request, Response } from "express";
 import { User } from "../models/user";
+import * as admin from 'firebase-admin/auth';
 
-export function handleUserRequest(req: Request, res: Response) {
+export async function handleUserRequest(req: Request, res: Response) {
   res.setHeader("Content-Type", "application/json");
-  const scooby: User = {
-    id: 1,
-    name: "Scooby",
-    age: 10,
-    message: process.env.EXAMPLE_PROPERTY + "",
-  };
-  res.send(scooby);
+   const users = await admin.getAuth().listUsers(2);
+
+  res.send(users);
 }

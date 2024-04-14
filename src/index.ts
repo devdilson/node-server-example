@@ -2,16 +2,24 @@
 import express, { Express, Request, Response } from "express";
 // Importa a biblioteca dotenv para ler o arquivo .env
 import dotenv from "dotenv";
-dotenv.config();
+// Importa o endpoint
 import { handleUserRequest } from "./endpoints/users";
+import { getFirebaseAdmin } from "./firebase";
+
+// Inicializa o framework de configuração
+dotenv.config();
+
+// Inicializa firebase 
+getFirebaseAdmin();
 
 // Cria uma instância servidor com express
-const app: Express = express();
+const serverApp: Express = express();
 const port = 3000;
 
-app.get("/", handleUserRequest);
+// Registra o novo endpoint
+serverApp.get("/api/user", handleUserRequest);
 
 // Prepara o servidor para iniciar na porta
-app.listen(port, () => {
+serverApp.listen(port, () => {
   console.log(`[Server]: I am running at http://localhost:${port}`);
 });
